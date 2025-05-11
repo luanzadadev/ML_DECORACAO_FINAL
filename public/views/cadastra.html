@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/cadastra.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+
+        body {
+    margin: 0;
+    height: 100vh;
+    display: flex;  
+    position: relative;
+    color: black;
+    background: #F5F5DC;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+
+}
+
+header {
+    background: #FFC300;
+    width: 100%;
+    height: 50px;
+    margin: 0px;
+    display: flex; /* Torna flexível */
+    align-items: center; /* Alinha verticalmente */
+    justify-content: center;
+    padding: 10px 20px;
+
+}
+
+header button{
+    display: flex;
+    font-size: larger;
+    height: 30px;
+    width: 130px;
+    color: white;
+    background: #2C2C2C;
+    border: none;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+header h1{
+    margin-left: 10px;
+}
+
+
+.placeimg{
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+    position: relative;
+    background: gray;
+    border-radius: 100%;
+    
+}
+
+.placetitle{
+    
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    position: relative;
+    z-index: 2;
+}
+
+.placetable{
+    display: flex;
+    justify-content: center;
+}
+
+.tabel {
+    display: flex;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:auto;
+    width: 600px;
+    flex-direction: column;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #FFC300;
+    position: relative;
+ 
+}
+
+.tabel input{
+    border-radius: 5px;
+    height: 35px;
+    width: 250px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #2C2C2C;
+    border: none;
+    font-size: larger;
+    color: white;
+}
+
+
+
+.div-criarConts{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+}
+
+.div-criarConts button{
+    background: #2C2C2C;
+    color: white;
+    height: 35px;
+    width: 200px;
+    border: none;
+    font-size: larger;
+    margin: 10px;
+    border-radius: 10px;
+   
+}
+
+.log{
+    display: flex;
+    justify-content: center;
+    background: none;
+    font-size: larger;
+    
+}
+
+
+
+
+.PlaceHelp{
+    
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    height: 100%;
+}
+
+
+
+.PlaceHelp div{
+    background: #FFC300;
+    height: 40px;
+    width: 300px;
+    font-size: larger;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-weight: 600;
+    margin  : 20px;
+
+}
+    </style>
+
+
+    <header>
+
+        <button class="Bvoltar">Voltar</button>
+        <h1>MlDecoração</h1>
+    </header>
+
+
+<div class="placeimg">
+<img class="logo" src="images/logo_ML.png" alt="">
+</div>
+
+<div class="placetitle">
+<h1 class="title">Acesse ou crie sua conta</h1>
+</div>
+    
+    <div class="placetable">
+    <div class="tabel">
+        <h1>Cadastra-se</h1>
+
+        <form action="/cadastro" method="POST">
+    <div>
+        <input type="text" name="nome" placeholder="Nome" required>
+    </div>
+    
+    <div>
+        <input type="text" name="sobrenome" placeholder="Sobrenome" required>
+    </div>
+    
+    <div>
+        <input type="email" name="email" placeholder="Email" required>
+    </div>
+    
+    <div>
+        <input type="password" name="senha" placeholder="Senha" required>
+    </div>
+    
+    <div>
+        <input type="text" name="cpf_cnpj" placeholder="CPF ou CNPJ" required>
+    </div>
+    
+    <div>
+        <input type="tel" name="telefone" placeholder="Telefone" required>
+    </div>
+
+     <div>
+        <input type="text" id="cep" name="cep" placeholder="CEP" required onblur="buscarEndereco()">
+    </div>
+
+    <div>
+        <input type="text" id="estado" name="estado" placeholder="Estado" required>
+    </div>
+    
+    <div>
+        <input type="text" id="cidade" name="cidade" placeholder="Cidade" required>
+    </div>
+    
+    <div>
+        <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
+    </div>
+    
+    <div>
+        <input type="text" id="rua" name="rua" placeholder="Rua" required>
+    </div>
+    
+    <div>
+  <input type="text" name="numero_da_casa" placeholder="Número" required>
+</div>
+
+
+    <div class="div-criarConts">
+        <button type="submit">Criar Conta</button>
+    </div>
+</form>
+
+        <div class="log">
+          
+         <p>possui uma conta? <a href="login.html">Usar Conta</a></p> 
+        </div>
+
+    
+    </div>
+</div>
+
+
+<div class="PlaceHelp">
+    <div>
+    <p>Probrema? fale conosco </p>
+    </div>
+</div>
+
+<script>
+    // Função para buscar o endereço com base no CEP
+    function buscarEndereco() {
+        const cep = document.getElementById('cep').value.replace(/\D/g, ''); // Remove qualquer caractere não numérico
+
+        if (cep.length === 8) { // Verifica se o CEP tem 8 dígitos
+            const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+            // Faz a requisição para a API ViaCEP
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.erro) {
+                        alert('CEP não encontrado.');
+                    } else {
+                        // Preenche os campos com os dados retornados pela API
+                        document.getElementById('estado').value = data.uf;
+                        document.getElementById('cidade').value = data.localidade;
+                        document.getElementById('bairro').value = data.bairro;
+                        document.getElementById('rua').value = data.logradouro;
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar o endereço:', error);
+                });
+        } else {
+            alert('CEP inválido!');
+        }
+    }
+</script>
+
+
+
+</body>
+
+</html>

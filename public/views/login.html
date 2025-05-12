@@ -205,9 +205,12 @@ header h1{
         <input type="text" name="email" placeholder="Email" required>
     </div>
 
-    <div>
-        <input type="password" name="senha" placeholder="Senha" required>
-    </div>
+  <div style="position: relative;">
+    <input type="password" id="senha" name="senha" placeholder="Senha" required>
+    <button type="button" onclick="toggleSenha()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
+        👁️
+    </button>
+</div>
 
     <div class="Esqueceu">
         <a href="/views/troca_senha.html">Esqueceu a senha? </a>
@@ -220,7 +223,7 @@ header h1{
 
         <div class="log">
           
-         <p>Não possui uma conta? <a href="/views/cadastra.html">Cadastre-se </a></p> 
+         <p>Não possui uma conta? <a href="./cadastra.html">Cadastre-se </a></p> 
         </div>
 
     
@@ -233,6 +236,13 @@ header h1{
     <p>Problema? fale conosco </p>
     </div>
 </div>
+<script>
+function toggleSenha() {
+    const senhaInput = document.getElementById("senha");
+    const tipoAtual = senhaInput.getAttribute("type");
+    senhaInput.setAttribute("type", tipoAtual === "password" ? "text" : "password");
+}
+</script>
 
 
 </body>

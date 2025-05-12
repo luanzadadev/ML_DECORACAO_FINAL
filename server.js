@@ -68,73 +68,100 @@ db.connect((err) => {
 
 
   // Rota de Cadastro
-  app.post('/cadastro', (req, res) => {
-    const { nome, email, senha, cpf_cnpj, telefone, cidade, bairro, rua, numero_da_casa, cep } = req.body;
+  // Rota de Cadastro
+app.post('/cadastro', (req, res) => {
+  const {
+    nome,
+    email,
+    senha,
+    cpf_cnpj,
+    telefone,
+    cidade,
+    bairro,
+    rua,
+    numero_da_casa,
+    cep
+  } = req.body;
 
-    // Verifica se o email já existe
-    db.query('SELECT * FROM usuario WHERE email = ?', [email], (err, result) => {
+  // Limpa os dados (remove tudo que não for número)
+  const cpfLimpo = cpf_cnpj.replace(/\D/g, '');
+  const telefoneLimpo = telefone.replace(/\D/g, '');
+  const cepLimpo = cep.replace(/\D/g, '');
+
+  // Verifica se o email já existe
+  db.query('SELECT * FROM usuario WHERE email = ?', [email], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Erro interno no servidor' });
+    }
+
+    if (result.length > 0) {
+      return res.status(400).json({ message: 'Email já cadastrado' });
+    }
+
+    // Criptografa a senha
+    bcrypt.hash(senha, 10, (err, hashedPassword) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Erro interno no servidor' });
+        return res.status(500).json({ message: 'Erro ao criptografar a senha' });
       }
 
-      if (result.length > 0) {
-        return res.status(400).json({ message: 'Email já cadastrado' });
-      }
+      // Insere o novo usuário no banco de dados
+      const dataCadastro = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      const query = `
+        INSERT INTO usuario (
+          nome, email, senha, cpf_cnpj, telefone,
+          cidade, bairro, rua, numero_da_casa, cep, data_cadastro
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
 
-      // Criptografa a senha
-      bcrypt.hash(senha, 10, (err, hashedPassword) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ message: 'Erro ao criptografar a senha' });
-        }
-
-        // Insere o novo usuário no banco de dados
-        const dataCadastro = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        const query = 'INSERT INTO usuario (nome, email, senha, cpf_cnpj, telefone, cidade, bairro, rua, numero_da_casa, cep, data_cadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        
-        db.query(query, [nome, email, hashedPassword, cpf_cnpj, telefone, cidade, bairro, rua, numero_da_casa, cep, dataCadastro], (err, result) => {
+      db.query(
+        query,
+        [nome, email, hashedPassword, cpfLimpo, telefoneLimpo, cidade, bairro, rua, numero_da_casa, cepLimpo, dataCadastro],
+        (err, result) => {
           if (err) {
             console.error(err);
             return res.status(500).json({ message: 'Erro ao cadastrar usuário' });
           }
 
           return res.json({ message: 'Cadastro bem-sucedido' });
-        });
-      });
+        }
+      );
     });
   });
+});
 
   // Rota para Troca de Senha
-  app.post('/troca-de-senha', (req, res) => {
-    const { cpf_cnpj, senha_nova } = req.body;
+ app.post('/troca-de-senha', (req, res) => {
+  const { cpf_cnpj, senha_nova } = req.body;
+  const cpfLimpo = cpf_cnpj.replace(/\D/g, '');
 
-    // Criptografa a nova senha
-    bcrypt.hash(senha_nova, 10, (err, hashedPassword) => {
+  // Criptografa a nova senha
+  bcrypt.hash(senha_nova, 10, (err, hashedPassword) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Erro ao criptografar a senha' });
+    }
+
+    // Atualiza a senha no banco de dados
+    db.query('UPDATE usuario SET senha = ? WHERE cpf_cnpj = ?', [hashedPassword, cpfLimpo], (err, result) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Erro ao criptografar a senha' });
+        return res.status(500).json({ message: 'Erro ao atualizar a senha' });
       }
 
-      // Atualiza a senha no banco de dados
-      db.query('UPDATE usuario SET senha = ? WHERE cpf_cnpj = ?', [hashedPassword, cpf_cnpj], (err, result) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ message: 'Erro ao atualizar a senha' });
-        }
+      if (result.affectedRows === 0) {
+        return res.status(400).json({ message: 'CPF/CNPJ não encontrado' });
+      }
 
-        if (result.affectedRows === 0) {
-          return res.status(400).json({ message: 'CPF/CNPJ não encontrado' });
-        }
-
-        return res.json({ message: 'Senha alterada com sucesso' });
-      });
+      return res.json({ message: 'Senha alterada com sucesso' });
     });
   });
+});
 
   // Rota para as páginas estáticas
   app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'login.html'));
+    res.sendFile(path.join(__dirname,'public', 'views', 'login.html'));
   });
 
   app.get('/cadastro', (req, res) => {

@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/login.css">
+   <link rel="stylesheet" href="../css/login.css">
     <title>Document</title>
 </head>
 
 <body>
-
+<!--
     <style>
         body {
     margin: 0;
@@ -179,7 +179,7 @@ header h1{
 
 }
     </style>
-
+-->
 
     <header>
 
@@ -205,9 +205,12 @@ header h1{
         <input type="text" name="email" placeholder="Email" required>
     </div>
 
-    <div>
-        <input type="password" name="senha" placeholder="Senha" required>
-    </div>
+  <div style="position: relative;">
+    <input type="password" id="senha" name="senha" placeholder="Senha" required>
+    <button type="button" onclick="toggleSenha()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
+        👁️
+    </button>
+</div>
 
     <div class="Esqueceu">
         <a href="/views/troca_senha.html">Esqueceu a senha? </a>
@@ -218,12 +221,10 @@ header h1{
     </div>
 </form>
 
-        <div class="log">
-          
-         <p>Não possui uma conta? <a href="/views/cadastra.html">Cadastre-se </a></p> 
-        </div>
+         <div class="log">
+  <span>Não possui uma conta? </span><a href="/views/cadastra.html">Cadastre-se</a>
+</div>
 
-    
     </div>
 </div>
 
@@ -233,7 +234,17 @@ header h1{
     <p>Problema? fale conosco </p>
     </div>
 </div>
+<!--
+<script>
+function toggleSenha() {
+    const senhaInput = document.getElementById("senha");
+    const tipoAtual = senhaInput.getAttribute("type");
+    senhaInput.setAttribute("type", tipoAtual === "password" ? "text" : "password");
+}
+</script>
+-->
 
+<script src="../script/login.js"></script>
 
 </body>
 

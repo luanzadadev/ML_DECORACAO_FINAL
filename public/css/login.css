@@ -1,6 +1,7 @@
-body {
+      body {
     margin: 0;
     height: 100vh;
+    overflow-y: scroll;
     display: flex;
     overflow: hidden;
     position: relative;
@@ -8,6 +9,7 @@ body {
     background: #F5F5DC;
     display: flex;
     flex-direction: column;
+    
 
 }
 
